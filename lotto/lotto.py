@@ -1,7 +1,16 @@
 from random import choice
 
 
-def draw_numbers(num_of_numbers=4):
+def draw_numbers(num_of_numbers=6) -> set:
+    """Draw n numbers from 1 to 49
+
+    Args:
+        num_of_numbers (int, optional): Number of numbers to draw.
+                                        Defaults = 6.
+
+    Returns:
+        set: set with n draw numbers
+    """
     numbers = [number for number in range(1, 50)]
     result = set()
     while len(result) != num_of_numbers:
@@ -9,23 +18,48 @@ def draw_numbers(num_of_numbers=4):
 
     return result
 
-def check_win(user_numbers, function) -> bool:
-    x = user_numbers
-    y = function()
-    print(f'{x} --- {y}')
-    #return user_numbers == function()
-    return x == y
 
-my_numbers = {8, 11, 1, 17}
+def check_win(numbers_to_check, function) -> bool:
+    """ Compare drawn_numbers with user_numbers
+        if True user win
+
+    Args:
+        user_numbers (set): set with user numbers
+        function (set): set with drawn numbers
+
+    Returns:
+        bool: If True user win
+    """
+    drawn_numbers = function()
+    if len(numbers_to_check) == len(drawn_numbers):
+        return numbers_to_check == drawn_numbers
+
+
+def collect_user_numbers() -> set:
+    """Collect six unique numbers from 1 to 49 from user
+
+    Returns:
+        set: set of user numbers
+    """
+    user_numbers = set()
+    print('Give your 6 unique numbers from 1 to 49')
+    while len(user_numbers) != 6:
+        number = int(input('Give your number: '))
+        if number in range(1, 50):
+            user_numbers.add(number)
+    return user_numbers
+
+
+user_numbers = collect_user_numbers()
 number_of_samples = 0
 
 while True:
     number_of_samples += 1
-    if check_win(my_numbers, draw_numbers):
+    if check_win(user_numbers, draw_numbers):
         break
 lottery_ticket_cost = 3
 total_cost = number_of_samples * lottery_ticket_cost
-weeks = number_of_samples /3
+weeks = number_of_samples / 3
 months = weeks / 4
 years = months / 12
 
@@ -35,18 +69,3 @@ print(f'Total cost: {total_cost:,} PLN.')
 print(f'Weeks: {weeks:,.1f}')
 print(f'Months: {months:,.1f}')
 print(f'Years: {years:,.1f}')
-
-
-
-# liczby od 1 do 49
-# w karzdym losowaniu 6 liczb
-# 3 losowania w tygodniu
-# 3 zł za jeden zakład
-
-#Dodatkowo
-# - sprawdzaj tez 5,4,3 zanim wylosowałeś 6
-# - sprawdz ile dni, tygodni, miesięcy, lat zajeło trafienie 6ki
-# - sprawdź ile lat bedziesz miał gdy trafisz
-#
-
-
