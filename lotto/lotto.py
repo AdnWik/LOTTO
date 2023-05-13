@@ -30,9 +30,15 @@ def check_win(numbers_to_check, function) -> bool:
     Returns:
         bool: If True user win
     """
-    drawn_numbers = function()
+    if __name__ == "__main__":
+        drawn_numbers = function()
+    else:
+        drawn_numbers = function
+    
     if len(numbers_to_check) == len(drawn_numbers):
         return numbers_to_check == drawn_numbers
+    else:
+        return False
 
 
 def collect_user_numbers() -> set:
@@ -49,23 +55,24 @@ def collect_user_numbers() -> set:
             user_numbers.add(number)
     return user_numbers
 
+if __name__ == "__main__":
+    user_numbers = collect_user_numbers()
+    number_of_samples = 0
 
-user_numbers = collect_user_numbers()
-number_of_samples = 0
+    print('\nLottery in progress, please wait...')
+    while True:
+        number_of_samples += 1
+        if check_win(user_numbers, draw_numbers):
+            break
+    lottery_ticket_cost = 3
+    total_cost = number_of_samples * lottery_ticket_cost
+    weeks = number_of_samples / 3
+    months = weeks / 4
+    years = months / 12
 
-while True:
-    number_of_samples += 1
-    if check_win(user_numbers, draw_numbers):
-        break
-lottery_ticket_cost = 3
-total_cost = number_of_samples * lottery_ticket_cost
-weeks = number_of_samples / 3
-months = weeks / 4
-years = months / 12
-
-print('\n')
-print('YOU WIN!')
-print(f'Total cost: {total_cost:,} PLN.')
-print(f'Weeks: {weeks:,.1f}')
-print(f'Months: {months:,.1f}')
-print(f'Years: {years:,.1f}')
+    print('\n')
+    print('YOU WIN!')
+    print(f'Total cost: {total_cost:,} PLN.')
+    print(f'Weeks: {weeks:,.1f}')
+    print(f'Months: {months:,.1f}')
+    print(f'Years: {years:,.1f}')
